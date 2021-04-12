@@ -6,3 +6,10 @@ Installation:
  - Double click the bat file to run it
  - Follow the prompts
  - Success!
+
+Todo:
+ - Clean up the script
+ - Iron out any possible bugs
+ - Replace the powershell extraction with bash script extraction
+ - optionally, entirely rewrite in Powershell, possibly as an optional file, or a replacement.
+ - Maybe more.
