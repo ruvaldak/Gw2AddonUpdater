@@ -158,16 +158,6 @@ rmdir /s /q d912pxy
 cd bin64
 GOTO MENU
 
-:DISABLE
-rename d3d9.dll d3d9.dll.disabled
-rename d3d9_chainload.dll d3d9_chainload.dll.disabled
-GOTO MENU
-
-:ENABLE
-rename d3d9.dll.disabled d3d9.dll
-rename d3d9_chainload.dll.disabled d3d9_chainload.dll
-GOTO MENU
-
 :EOF
 cd ..
 ENDLOCAL
