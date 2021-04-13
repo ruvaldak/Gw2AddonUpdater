@@ -16,3 +16,8 @@ Todo:
  - clean up any bugs
  - clean up bat script
  - probably more.
+
+References:
+(Basically just shit that I'll look at I'm the future to improve this program)
+https://github.com/LambdaMathematician/arcdps_check
+https://github.com/solacelost/update-arcdps
