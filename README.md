@@ -9,7 +9,7 @@ Installation:
 
 Todo:
  - Rewrite in powershell
- - Investigate creating an on-booy service that checks for updates
+ - Investigate creating an on-boot service that checks for updates
  - check for updates before updating, possibly by verifying md5 hashes (does d912pxy even have an md5 hash? Too many files)
  - optionally make a version that checks for updates, updates, then boots gw2
  - investigate adding more add-ons such as Taco
