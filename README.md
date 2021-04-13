@@ -8,8 +8,11 @@ Installation:
  - Success!
 
 Todo:
- - Clean up the script
- - Iron out any possible bugs
- - Replace the powershell extraction with bash script extraction
- - optionally, entirely rewrite in Powershell, possibly as an optional file, or a replacement.
- - Maybe more.
+ - Rewrite in powershell
+ - Investigate creating an on-booy service that checks for updates
+ - check for updates before updating, possibly by verifying md5 hashes (does d912pxy even have an md5 hash? Too many files)
+ - optionally make a version that checks for updates, updates, then boots gw2
+ - investigate adding more add-ons such as Taco
+ - clean up any bugs
+ - clean up bat script
+ - probably more.
