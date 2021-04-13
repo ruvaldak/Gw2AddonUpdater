@@ -19,5 +19,5 @@ Todo:
 
 References:
 (Basically just shit that I'll look at I'm the future to improve this program)
-https://github.com/LambdaMathematician/arcdps_check
-https://github.com/solacelost/update-arcdps
+ - https://github.com/LambdaMathematician/arcdps_check
+ - https://github.com/solacelost/update-arcdps
