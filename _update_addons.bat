@@ -1,5 +1,10 @@
 @echo off
 SETLOCAL
+powershell -Command "Invoke-WebRequest https://curl.se/windows/dl-7.76.1/curl-7.76.1-win64-mingw.zip -OutFile curl.zip"
+powershell Expand-Archive curl.zip
+del /f curl.zip
+SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
+
 cd bin64
 
 :MENU
@@ -33,7 +38,7 @@ echo Backing up current ArcDPS...
 rename d3d9.dll d3d9.dll.bak
 )
 echo Downloading new ArcDPS...
-curl --output d3d9.dll --url https://www.deltaconnected.com/arcdps/x64/d3d9.dll
+%CURL% --output d3d9.dll --url https://www.deltaconnected.com/arcdps/x64/d3d9.dll
 echo Done!
 GOTO MENU
 
@@ -57,11 +62,11 @@ echo Making temporary working directory...
 mkdir tmp
 cd ./tmp/
 echo Downloading some tools...
-curl -Lk --output coreutils.zip --url "http://download-mirror.savannah.gnu.org/releases/coreutils/windows-64bit-unsupported/coreutils-8.31-28-windows-64bit.zip"
+%CURL% -Lk --output coreutils.zip --url "http://download-mirror.savannah.gnu.org/releases/coreutils/windows-64bit-unsupported/coreutils-8.31-28-windows-64bit.zip"
 powershell Expand-Archive coreutils.zip -DestinationPath coreutils
 del /f coreutils.zip
-curl -s https://api.github.com/repos/megai2/d912pxy/releases/latest \ | findstr browser_download_url | "./coreutils/coreutils-8.31-28-windows-64bit/cut.exe" -d : -f 2,3 > url.txt && set /p url=<url.txt 
-SET url=%url:"=% && curl -Lk --output d912pxy.zip --url %url% && del /f url.txt
+%CURL% -s https://api.github.com/repos/megai2/d912pxy/releases/latest \ | findstr browser_download_url | "./coreutils/coreutils-8.31-28-windows-64bit/cut.exe" -d : -f 2,3 > url.txt && set /p url=<url.txt 
+SET url=%url:"=% && %CURL% -Lk --output d912pxy.zip --url %url% && del /f url.txt
 rmdir /s /q coreutils
 powershell Expand-Archive d912pxy.zip -DestinationPath ./
 del /f d912pxy.zip
@@ -160,4 +165,5 @@ GOTO MENU
 
 :EOF
 cd ..
+rmdir /s /q curl
 ENDLOCAL
