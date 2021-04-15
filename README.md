@@ -17,6 +17,10 @@ Todo:
  - clean up bat script
  - probably more.
 
+In Progress:
+ - Rewriting in powershell
+ - cleaning up bugs
+
 References:
 (Basically just shit that I'll look at in the future to improve this program)
  - https://github.com/LambdaMathematician/arcdps_check
