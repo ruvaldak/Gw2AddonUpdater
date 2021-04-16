@@ -12,7 +12,7 @@ IF %ERRORLEVEL% NEQ 0 (
 	)
 ) ELSE (
 	SET CURL=curl
-}
+)
 cd bin64
 echo Deleting old backup...
 del /f d3d9_chainload.dll.bak
