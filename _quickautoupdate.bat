@@ -1,9 +1,16 @@
 @echo off
 SETLOCAL
-powershell -Command "Invoke-WebRequest https://curl.se/windows/dl-7.76.1/curl-7.76.1-win64-mingw.zip -OutFile curl.zip"
-powershell Expand-Archive curl.zip
-del /f curl.zip
-SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
+where /q curl
+IF %ERRORLEVEL% NEQ 0 (
+	IF EXIST "%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe" (
+		SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
+	) ELSE (
+		powershell -Command "Invoke-WebRequest https://curl.se/windows/dl-7.76.1/curl-7.76.1-win64-mingw.zip -OutFile curl.zip"
+		powershell Expand-Archive curl.zip
+		del /f curl.zip
+		SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
+	)
+)
 cd bin64
 echo Deleting old backup...
 del /f d3d9_chainload.dll.bak
@@ -44,5 +51,4 @@ echo Downloading new ArcDPS...
 %CURL% --output d3d9.dll --url https://www.deltaconnected.com/arcdps/x64/d3d9.dll
 echo Done!
 cd..
-rmdir /s /q curl
 ENDLOCAL

@@ -1,13 +1,23 @@
 @echo off
 SETLOCAL
-powershell -Command "Invoke-WebRequest https://curl.se/windows/dl-7.76.1/curl-7.76.1-win64-mingw.zip -OutFile curl.zip"
-powershell Expand-Archive curl.zip
-del /f curl.zip
-SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
+where /q curl
+IF %ERRORLEVEL% NEQ 0 (
+	IF EXIST "%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe" (
+		SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
+		GOTO MENU
+	) ELSE (
+		powershell -Command "Invoke-WebRequest https://curl.se/windows/dl-7.76.1/curl-7.76.1-win64-mingw.zip -OutFile curl.zip"
+		powershell Expand-Archive curl.zip
+		del /f curl.zip
+		SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
+		GOTO MENU
+	)
+)
 
-cd bin64
+
 
 :MENU
+cd bin64
 ECHO.
 ECHO                            MAIN MENU
 ECHO ...................................................................
@@ -165,5 +175,4 @@ GOTO MENU
 
 :EOF
 cd ..
-rmdir /s /q curl
 ENDLOCAL
