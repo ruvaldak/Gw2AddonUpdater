@@ -10,7 +10,10 @@ IF %ERRORLEVEL% NEQ 0 (
 		del /f curl.zip
 		SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
 	)
-)
+) ELSE (
+	SET CURL=curl
+	GOTO MENU
+}
 cd bin64
 echo Deleting old backup...
 del /f d3d9_chainload.dll.bak
