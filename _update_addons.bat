@@ -7,6 +7,7 @@ IF EXIST "_update_addons.bat.upd" (
 	rename _update_addons.bat.upd _update_addons.bat
 	echo GW2AddonUpdater has been updated! Please rerun!
 	pause
+	exit
 )
 
 
