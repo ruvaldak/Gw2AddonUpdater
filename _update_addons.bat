@@ -1,5 +1,15 @@
 @echo off
 SETLOCAL
+
+powershell -Command "$version = 'v1.0.2'; $response = Invoke-WebRequest https://api.github.com/repos/ruvaldak/Gw2AddonUpdater/releases/latest; $json = $response.Content | ConvertFrom-Json; $url = $json.assets[0].browser_download_Url; $latest = $json.tag_name; IF ($version -ne $latest) { Invoke-WebRequest $url -OutFile _update_addons.bat.upd }"
+IF EXIST "_update_addons.bat.upd" (
+	del /f _update_addons.bat
+	rename _update_addons.bat.upd _update_addons.bat
+	echo GW2AddonUpdater has been updated! Please rerun!
+	pause
+)
+
+
 where /q curl
 IF %ERRORLEVEL% NEQ 0 (
 	IF EXIST "%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe" (
@@ -15,9 +25,7 @@ IF %ERRORLEVEL% NEQ 0 (
 ) ELSE (
 	SET CURL=curl
 	GOTO MENU
-)
-
-
+}
 
 :MENU
 cd bin64
