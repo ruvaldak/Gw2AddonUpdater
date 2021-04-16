@@ -12,7 +12,10 @@ IF %ERRORLEVEL% NEQ 0 (
 		SET CURL="%cd%/curl/curl-7.76.1-win64-mingw/bin/curl.exe"
 		GOTO MENU
 	)
-)
+) ELSE (
+	SET CURL=curl
+	GOTO MENU
+}
 
 
 
