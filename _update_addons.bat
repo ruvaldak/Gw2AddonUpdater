@@ -5,9 +5,9 @@ powershell -Command "$version = 'v1.0.2'; $response = Invoke-WebRequest https://
 IF EXIST "_update_addons.bat.upd" (
 	del /f _update_addons.bat
 	rename _update_addons.bat.upd _update_addons.bat
-	echo GW2AddonUpdater has been updated! Please rerun!
-	pause
-	exit
+	echo GW2AddonUpdater has been updated! Press ENTER to restart the program.
+	pause >nul
+	start cmd /c "%cd%/_update_addons.bat" && exit
 )
 
 
