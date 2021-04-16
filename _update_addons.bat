@@ -26,7 +26,7 @@ IF %ERRORLEVEL% NEQ 0 (
 ) ELSE (
 	SET CURL=curl
 	GOTO MENU
-}
+)
 
 :MENU
 cd bin64
