@@ -71,11 +71,19 @@ IF %V%==0 GOTO PXYSOLO
 IF %V%==1 GOTO PXYARC
 
 :PXYSOLO
-cd d912pxy/dll/release && xcopy /s /y d3d9.dll "%cd%/bin64/d3d9.dll*" & cd ../../../bin64
+IF EXIST "%cd%/bin64/d912pxy.dll" (
+	cd d912pxy/dll/release && xcopy /s /y /i d3d9.dll "../../../bin64/d912pxy.dll*" & cd ../../../bin64
+) ELSE (
+	cd d912pxy/dll/release && xcopy /s /y /i d3d9.dll "../../../bin64/d3d9.dll*" & cd ../../../bin64
+)
 GOTO MENU
 
 :PXYARC
-cd d912pxy/dll/release && xcopy /s /y d3d9.dll "%cd%/bin64/d3d9_chainload.dll*" & cd ../../../bin64
+IF EXIST "%cd%/bin64/d912pxy.dll" (
+	cd d912pxy/dll/release && xcopy /s /y /i d3d9.dll "../../../bin64/d912pxy.dll*" & cd ../../../bin64
+) ELSE (
+	cd d912pxy/dll/release && xcopy /s /y /i d3d9.dll "../../../bin64/d3d9_chainload.dll*" & cd ../../../bin64
+)
 GOTO ARC
 
 :TROUBLE
@@ -165,7 +173,43 @@ IF %L%==1 GOTO RADIAL
 IF %L%==0 GOTO MENU
 
 :RADIAL
-GOTO EXTRA
+REM https://api.github.com/repos/Friendly0Fire/GW2Radial/releases/latest
+cd ..
+IF EXIST tmp\ rmdir /s /q tmp
+mkdir tmp && cd tmp
+powershell -Command "$response = Invoke-WebRequest https://api.github.com/repos/Friendly0Fire/GW2Radial/releases/latest; $json = $response.Content | ConvertFrom-Json; $url = $json.assets[0].browser_download_Url; Invoke-WebRequest $url -OutFile gw2radial.zip; Expand-Archive gw2radial.zip -DestinationPath ./gw2radial"
+del /f gw2radial.zip
+cd gw2radial
+GOTO RADIALCOND
+
+:RADIALCOND
+echo.
+echo Do you use ArcDPS? (1=Yes; 0=No)
+SET /P ARCQ=Input: 
+echo.
+echo Do you use d912pxy? (1=Yes; 0=No)
+SET /p DXQ=Input: 
+GOTO RADIALTEST
+
+:RADIALTEST
+IF %ARCQ%==1 (
+	IF %DXQ%==1 (
+		rename "%cd%/../../bin64/d3d9_chainload.dll" d912pxy.dll
+	)
+	xcopy /s /y /i d3d9.dll "../../bin64/d3d9_chainload.dll"
+) ELSE (
+	IF %DXQ%==1 (
+		rename "%cd%/../../bin64/d3d9.dll" d912pxy.dll
+	)
+	xcopy /s /y /i d3d9.dll "../../bin64/d3d9.dll"
+)
+GOTO RADIALCONT
+
+:RADIALCONT
+cd ../..
+rmdir /s /q tmp
+cd bin64
+GOTO MENU
 
 :EOF
 cd ..
