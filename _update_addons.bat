@@ -12,18 +12,14 @@ ECHO.
 ECHO 1 - Update/Install Both (ArcDPS+d912pxy)
 ECHO 2 - Update/Install ArcDPS
 ECHO 3 - Update/Install d912pxy
-ECHO 4 - Other addons
-ECHO 5 - I'm having issues! (troubleshooting menu)
-ECHO 6 - Settings menu
+ECHO 4 - I'm having issues! (troubleshooting menu)
 ECHO 0 - EXIT
 ECHO.
 SET /P M=Input: 
 IF %M%==1 GOTO QUICK
 IF %M%==2 GOTO ARC
 IF %M%==3 GOTO PXY
-IF %M%==4 GOTO EXTRA
-IF %M%==5 GOTO TROUBLE
-IF %M%==6 GOTO SETTINGS
+IF %M%==4 GOTO TROUBLE
 IF %M%==0 GOTO EOF
 
 :QUICK
