@@ -25,3 +25,5 @@ References:
 (Basically just shit that I'll look at in the future to improve this program)
  - https://github.com/LambdaMathematician/arcdps_check
  - https://github.com/solacelost/update-arcdps
+
+Credit to https://github.com/jantari/ClickableMenus for the UI code.
