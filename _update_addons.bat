@@ -49,7 +49,7 @@ IF EXIST d912pxy.bak\ rmdir /s /q d912pxy.bak
 echo Making d912pxy backup folder...
 mkdir d912pxy.bak
 echo Copying all contents of d912pxy folder to d912pxy backup folder...
-xcopy.exe /s /y d912pxy d912pxy.bak
+xcopy.exe /q /s /y d912pxy d912pxy.bak
 echo Making temporary working directory...
 mkdir tmp
 cd ./tmp/
@@ -58,7 +58,7 @@ powershell -Command "$response = Invoke-WebRequest https://api.github.com/repos/
 del /f d912pxy.zip
 cd ..
 echo Copying extracted files...
-xcopy.exe /s /y /i "%cd%/tmp/d912pxy" "%cd%/d912pxy"
+xcopy.exe /q /s /y /i "%cd%/tmp/d912pxy" "%cd%/d912pxy"
 rmdir /s /q tmp
 IF %M%==1 GOTO PXYARC
 ECHO.
@@ -72,17 +72,17 @@ IF %V%==1 GOTO PXYARC
 
 :PXYSOLO
 IF EXIST "%cd%/bin64/d912pxy.dll" (
-	cd d912pxy/dll/release && xcopy /s /y /i d3d9.dll "../../../bin64/d912pxy.dll*" & cd ../../../bin64
+	cd d912pxy/dll/release && xcopy /q /s /y /i d3d9.dll "../../../bin64/d912pxy.dll*" & cd ../../../bin64
 ) ELSE (
-	cd d912pxy/dll/release && xcopy /s /y /i d3d9.dll "../../../bin64/d3d9.dll*" & cd ../../../bin64
+	cd d912pxy/dll/release && xcopy /q /s /y /i d3d9.dll "../../../bin64/d3d9.dll*" & cd ../../../bin64
 )
 GOTO MENU
 
 :PXYARC
 IF EXIST "%cd%/bin64/d912pxy.dll" (
-	cd d912pxy/dll/release && xcopy /s /y /i d3d9.dll "../../../bin64/d912pxy.dll*" & cd ../../../bin64
+	cd d912pxy/dll/release && xcopy /q /s /y /i d3d9.dll "../../../bin64/d912pxy.dll*" & cd ../../../bin64
 ) ELSE (
-	cd d912pxy/dll/release && xcopy /s /y /i d3d9.dll "../../../bin64/d3d9_chainload.dll*" & cd ../../../bin64
+	cd d912pxy/dll/release && xcopy /q /s /y /i d3d9.dll "../../../bin64/d3d9_chainload.dll*" & cd ../../../bin64
 )
 GOTO ARC
 
@@ -140,7 +140,7 @@ GOTO TROUBLE
 ECHO.
 ECHO Are you sure you want to remove all your addons?
 ECHO.
-ECHO Literally anyhting = No
+ECHO Literally anything = No
 ECHO 0 = Yes
 SET /P N=Input: 
 IF %N%==0 GOTO REMOVEADDONCONFIRM
@@ -175,8 +175,11 @@ IF %L%==0 GOTO MENU
 :RADIAL
 REM https://api.github.com/repos/Friendly0Fire/GW2Radial/releases/latest
 cd ..
+echo Cleaning anything that might need to be cleaned...
 IF EXIST tmp\ rmdir /s /q tmp
+echo Making temporary working directory...
 mkdir tmp && cd tmp
+echo Downloading and extracting files...
 powershell -Command "$response = Invoke-WebRequest https://api.github.com/repos/Friendly0Fire/GW2Radial/releases/latest; $json = $response.Content | ConvertFrom-Json; $url = $json.assets[0].browser_download_Url; Invoke-WebRequest $url -OutFile gw2radial.zip; Expand-Archive gw2radial.zip -DestinationPath ./gw2radial"
 del /f gw2radial.zip
 cd gw2radial
@@ -192,23 +195,27 @@ SET /p DXQ=Input:
 GOTO RADIALTEST
 
 :RADIALTEST
+echo Installing...
 IF %ARCQ%==1 (
 	IF %DXQ%==1 (
-		rename "%cd%/../../bin64/d3d9_chainload.dll" d912pxy.dll
+		IF NOT EXIST "%cd%/../../bin64/d912pxy.dll" rename "%cd%/../../bin64/d3d9_chainload.dll" d912pxy.dll
 	)
-	xcopy /s /y /i d3d9.dll "../../bin64/d3d9_chainload.dll"
+	rename "d3d9.dll" "d3d9_chainload.dll"
+	move /Y d3d9_chainload.dll "%cd%/../../bin64/"
 ) ELSE (
 	IF %DXQ%==1 (
-		rename "%cd%/../../bin64/d3d9.dll" d912pxy.dll
+		IF NOT EXIST "%cd%/../../bin64/d912pxy.dll" rename "%cd%/../../bin64/d3d9.dll" d912pxy.dll
 	)
-	xcopy /s /y /i d3d9.dll "../../bin64/d3d9.dll"
+	move /Y d3d9.dll "%cd%/../../bin64/"
 )
 GOTO RADIALCONT
 
 :RADIALCONT
 cd ../..
+echo Cleaning up...
 rmdir /s /q tmp
 cd bin64
+echo Done!
 GOTO MENU
 
 :EOF
