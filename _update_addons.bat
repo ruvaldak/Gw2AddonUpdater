@@ -6,6 +6,7 @@ cd bin64
 GOTO MENU
 
 :MENU
+cls
 ECHO.
 ECHO                            MAIN MENU
 ECHO ...................................................................
@@ -20,6 +21,7 @@ ECHO 5 - I'm having issues! (troubleshooting menu)
 ECHO 0 - EXIT
 ECHO.
 SET /P M=Input: 
+cls
 IF %M%==1 GOTO QUICK
 IF %M%==2 GOTO ARC
 IF %M%==3 GOTO PXY
@@ -34,6 +36,7 @@ GOTO PXY
 echo Downloading new ArcDPS...
 powershell -Command "Invoke-WebRequest https://www.deltaconnected.com/arcdps/x64/d3d9.dll -OutFile d3d9.dll"
 echo Done!
+pause
 GOTO MENU
 
 :PXY
@@ -76,6 +79,8 @@ IF EXIST "%cd%/bin64/d912pxy.dll" (
 ) ELSE (
 	cd d912pxy/dll/release && xcopy /q /s /y /i d3d9.dll "../../../bin64/d3d9.dll*" & cd ../../../bin64
 )
+echo Done!
+pause
 GOTO MENU
 
 :PXYARC
@@ -84,9 +89,11 @@ IF EXIST "%cd%/bin64/d912pxy.dll" (
 ) ELSE (
 	cd d912pxy/dll/release && xcopy /q /s /y /i d3d9.dll "../../../bin64/d3d9_chainload.dll*" & cd ../../../bin64
 )
-GOTO ARC
+IF %M%==1 GOTO ARC
+GOTO MENU
 
 :TROUBLE
+cls
 ECHO.
 ECHO ....................
 ECHO Troubleshooting menu
@@ -98,6 +105,7 @@ ECHO 3 - Remove addons entirely
 ECHO 4 - Return to MENU
 ECHO.
 SET /P K=Input: 
+cls
 IF %K%==1 GOTO ENABLEDISABLE
 IF %K%==2 GOTO REMOVEDLL
 IF %K%==3 GOTO REMOVEADDON
@@ -159,6 +167,7 @@ cd bin64
 GOTO MENU
 
 :EXTRA
+cls
 ECHO.
 ECHO                            EXTRA ADDONS
 ECHO ...................................................................
@@ -169,6 +178,7 @@ ECHO 1 - GW2Radial
 ECHO 0 - MAIN MENU
 ECHO.
 SET /P L=Input: 
+cls
 IF %L%==1 GOTO RADIAL
 IF %L%==0 GOTO MENU
 
@@ -216,6 +226,7 @@ echo Cleaning up...
 rmdir /s /q tmp
 cd bin64
 echo Done!
+pause
 GOTO MENU
 
 :EOF
