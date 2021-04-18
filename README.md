@@ -25,3 +25,6 @@ References:
 (Basically just shit that I'll look at in the future to improve this program)
  - https://github.com/LambdaMathematician/arcdps_check
  - https://github.com/solacelost/update-arcdps
+
+
+Want to support my work? Check out my patreon! https://www.patreon.com/ruvaldak
