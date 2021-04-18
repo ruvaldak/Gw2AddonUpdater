@@ -1,8 +1,11 @@
 @echo off
 SETLOCAL
 
-:MENU
+:START
 cd bin64
+GOTO MENU
+
+:MENU
 ECHO.
 ECHO                            MAIN MENU
 ECHO ...................................................................
@@ -12,43 +15,37 @@ ECHO.
 ECHO 1 - Update/Install Both (ArcDPS+d912pxy)
 ECHO 2 - Update/Install ArcDPS
 ECHO 3 - Update/Install d912pxy
-ECHO 4 - I'm having issues! (troubleshooting menu)
+ECHO 4 - Other addons
+ECHO 5 - I'm having issues! (troubleshooting menu)
 ECHO 0 - EXIT
 ECHO.
 SET /P M=Input: 
 IF %M%==1 GOTO QUICK
 IF %M%==2 GOTO ARC
 IF %M%==3 GOTO PXY
-IF %M%==4 GOTO TROUBLE
+IF %M%==4 GOTO EXTRA
+IF %M%==5 GOTO TROUBLE
 IF %M%==0 GOTO EOF
 
 :QUICK
 GOTO PXY
 
 :ARC
-IF NOT %M%==1 (
-echo Deleting old backup...
-del /f d3d9.dll.bak
-echo Backing up current ArcDPS...
-rename d3d9.dll d3d9.dll.bak
-)
 echo Downloading new ArcDPS...
 powershell -Command "Invoke-WebRequest https://www.deltaconnected.com/arcdps/x64/d3d9.dll -OutFile d3d9.dll"
 echo Done!
 GOTO MENU
 
 :PXY
-echo Deleting old backup...
-del /f d3d9_chainload.dll.bak
-echo Backing up current d912pxy dll...
-del /f d3d9.dll.bak
-del /f d3d9_chainload.dll.bak
-rename d3d9.dll d3d9.dll.bak
-rename d3d9_chainload.dll d3d9_chainload.dll.bak
 echo Cleaning up anything that needs to be...
 cd ..
-rmdir /s /q tmp
-rmdir /s /q d912pxy.bak
+
+REM remove tmp folder if it exists
+IF EXIST tmp\ rmdir /s /q tmp
+
+REM remove d912pxy.bak folder if it exists. We'll be backing up the current one anyways.
+IF EXIST d912pxy.bak\ rmdir /s /q d912pxy.bak
+
 echo Making d912pxy backup folder...
 mkdir d912pxy.bak
 echo Copying all contents of d912pxy folder to d912pxy backup folder...
@@ -121,14 +118,14 @@ for /r "%cd%" %%a in (*) do (
 GOTO TROUBLE
 
 :REMOVEDLL
-del /f "d3d9.dll.bak"
-del /f "d3d9_chainload.dll.bak"
+IF EXIST "d3d9.dll.bak" del /f "d3d9.dll.bak"
+IF EXIST "d3d9_chainload.dll.bak" del /f "d3d9_chainload.dll.bak"
 xcopy /s /y d3d9.dll d3d9.dll.bak
 xcopy /s /y d3d9_chainload.dll d3d9_chainload.dll.bak
-del /f "d3d9.dll"
-del /f "d3d9_chainload.dll"
-del /f "d3d9.dll.disabled"
-del /f "d3d9_chainload.dll.disabled"
+IF EXIST "d3d9.dll" del /f "d3d9.dll"
+IF EXIST "d3d9_chainload.dll" del /f "d3d9_chainload.dll"
+IF EXIST "d3d9.dll.disabled" del /f "d3d9.dll.disabled"
+IF EXIST "d3d9_chainload.dll.disabled" del /f "d3d9_chainload.dll.disabled"
 GOTO TROUBLE
 
 :REMOVEADDON
@@ -142,16 +139,33 @@ IF %N%==0 GOTO REMOVEADDONCONFIRM
 GOTO TROUBLE
 
 :REMOVEADDONCONFIRM
-del /f "d3d9.dll.bak"
-del /f "d3d9_chainload.dll.bak"
-del /f "d3d9.dll"
-del /f "d3d9_chainload.dll"
-del /f "d3d9.dll.disabled"
-del /f "d3d9_chainload.dll.disabled"
+IF EXIST "d3d9.dll.bak" del /f "d3d9.dll.bak"
+IF EXIST "d3d9_chainload.dll.bak" del /f "d3d9_chainload.dll.bak"
+IF EXIST "d3d9.dll" del /f "d3d9.dll"
+IF EXIST "d3d9_chainload.dll" del /f "d3d9_chainload.dll"
+IF EXIST "d3d9.dll.disabled" del /f "d3d9.dll.disabled"
+IF EXIST "d3d9_chainload.dll.disabled" del /f "d3d9_chainload.dll.disabled"
 cd..
-rmdir /s /q d912pxy
+IF EXIST d912pxy\ rmdir /s /q d912pxy
 cd bin64
 GOTO MENU
+
+:EXTRA
+ECHO.
+ECHO                            EXTRA ADDONS
+ECHO ...................................................................
+ECHO Type the number coresponding to what you wish do to and press ENTER
+ECHO ...................................................................
+ECHO.
+ECHO 1 - GW2Radial
+ECHO 0 - MAIN MENU
+ECHO.
+SET /P L=Input: 
+IF %L%==1 GOTO RADIAL
+IF %L%==0 GOTO MENU
+
+:RADIAL
+GOTO EXTRA
 
 :EOF
 cd ..
