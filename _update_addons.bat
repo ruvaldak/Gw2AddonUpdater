@@ -101,16 +101,53 @@ ECHO Troubleshooting menu
 ECHO ....................
 ECHO.
 ECHO 1 - Enable/Disable addons
-ECHO 2 - Remove addon dlls
-ECHO 3 - Remove addons entirely
-ECHO 4 - Return to MENU
+ECHP 2 - Guild Wars 2 updated and ArcDPS is broken!
+ECHO 3 - Remove all addon dlls
+ECHO 4 - Remove addons entirely
+ECHO 5 - Return to MENU
 ECHO.
 SET /P K=Input: 
 cls
 IF %K%==1 GOTO ENABLEDISABLE
-IF %K%==2 GOTO REMOVEDLL
-IF %K%==3 GOTO REMOVEADDON
-IF %K%==4 GOTO MENU
+IF %K%==2 GOTO REMOVEARC
+IF %K%==3 GOTO REMOVEDLL
+IF %K%==4 GOTO REMOVEADDON
+IF %K%==5 GOTO MENU
+
+:REMOVEARC
+ECHO.
+ECHO Are you using D912Pxy?
+ECHO.
+ECHO Literally anything = No
+ECHO 1 = Yes
+SET /P B=Input: 
+IF %B%==1 GOTO REMOVEARCPXYCONFIRM
+GOTO REMOVEARCCONFIRM
+
+:REMOVEARCPXYCONFIRM
+echo Deleting ArcDPS...
+IF EXIST "d3d9_chainload.dll" del /f "d3d9_chainload.dll"
+IF EXIST "../d3d11.dll" del /f "../d3d11.dll"
+echo Done!
+echo.
+echo Reinstalling ArcDPS won't do any good if Guild Wars 2 just updated.
+echo ArcDPS should be updated within a day or so after the update.
+echo So, just wait a day or so, then run the app again to reinstall!
+pause
+GOTO TROUBLE
+
+:REMOVEARCCONFIRM
+echo Deleting ArcDPS...
+IF EXIST "d3d9.dll" del /f "d3d9.dll"
+IF EXIST "../d3d11.dll" del /f "../d3d11.dll"
+echo Done!
+echo.
+echo Reinstalling ArcDPS won't do any good if Guild Wars 2 just updated.
+echo ArcDPS should be updated within a day or so after the update.
+echo So, just wait a day or so, then run the app again to reinstall!
+pause
+GOTO TROUBLE
+
 
 :ENABLEDISABLE
 for /r "%cd%" %%a in (*) do (
