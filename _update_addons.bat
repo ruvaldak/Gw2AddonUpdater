@@ -127,7 +127,7 @@ GOTO REMOVEARCCONFIRM
 :REMOVEARCPXYCONFIRM
 echo Deleting ArcDPS...
 IF EXIST "d3d9_chainload.dll" del /f "d3d9_chainload.dll"
-IF EXIST "../d3d11.dll" del /f "../d3d11.dll"
+IF EXIST "%cd%/../d3d11.dll" del /f "%cd%/../d3d11.dll"
 echo Done!
 echo.
 echo Reinstalling ArcDPS won't do any good if Guild Wars 2 just updated.
@@ -139,7 +139,7 @@ GOTO TROUBLE
 :REMOVEARCCONFIRM
 echo Deleting ArcDPS...
 IF EXIST "d3d9.dll" del /f "d3d9.dll"
-IF EXIST "../d3d11.dll" del /f "../d3d11.dll"
+IF EXIST "%cd%/../d3d11.dll" del /f "%cd%/../d3d11.dll"
 echo Done!
 echo.
 echo Reinstalling ArcDPS won't do any good if Guild Wars 2 just updated.
