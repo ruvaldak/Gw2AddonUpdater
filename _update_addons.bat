@@ -34,7 +34,8 @@ GOTO PXY
 
 :ARC
 echo Downloading new ArcDPS...
-powershell -Command "Invoke-WebRequest https://www.deltaconnected.com/arcdps/x64/d3d9.dll -OutFile d3d9.dll"
+powershell -Command "Invoke-WebRequest https://www.deltaconnected.com/arcdps/x64/d3d11.dll -OutFile d3d9.dll"
+xcopy /q /s /y /i d3d9.dll "../d3d11.dll"
 echo Done!
 pause
 GOTO MENU
