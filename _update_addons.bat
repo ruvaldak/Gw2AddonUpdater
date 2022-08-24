@@ -101,7 +101,7 @@ ECHO Troubleshooting menu
 ECHO ....................
 ECHO.
 ECHO 1 - Enable/Disable addons
-ECHP 2 - Guild Wars 2 updated and ArcDPS is broken!
+ECHO 2 - Guild Wars 2 updated and ArcDPS is broken!
 ECHO 3 - Remove all addon dlls
 ECHO 4 - Remove addons entirely
 ECHO 5 - Return to MENU
